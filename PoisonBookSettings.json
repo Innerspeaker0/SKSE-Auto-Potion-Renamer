@@ -1,0 +1,95 @@
+{
+  "potions": [
+    {
+      "effectFormIDs": [
+        "Skyrim.esm|73F30",
+        "Skyrim.esm|10AA4A"
+      ],
+      "name": "{}Poison of Inescapable Collapse"
+    },
+    {
+      "effectFormIDs": [
+        "Skyrim.esm|73F30",
+        "Skyrim.esm|10AA4A",
+        "Skyrim.esm|3EB42"
+      ],
+      "name": "{}Poison of Fatal Collapse"
+    },
+    {
+      "effectFormIDs": [
+        "Skyrim.esm|3EB42",
+        "Skyrim.esm|73F25"
+      ],
+      "name": "Everyday {}Lacerating Poison"
+    },
+    {
+      "effectFormIDs": [
+        "Skyrim.esm|3A2B6",
+        "Skyrim.esm|73F2B"
+      ],
+      "name": "{}Mage's Bane Poison"
+    },
+    {
+      "effectFormIDs": [
+        "Skyrim.esm|10DE5E",
+        "Skyrim.esm|3EB42",
+        "Skyrim.esm|73F2B"
+      ],
+      "name": "Dralval's {}Sapping Poison"
+    },
+    {
+      "effectFormIDs": [
+        "Skyrim.esm|3EB42",
+        "Skyrim.esm|90042",
+        "Skyrim.esm|73F25"
+      ],
+      "name": "Cholzei's {}Chain Poison"
+    },
+    {
+      "effectFormIDs": [
+        "Skyrim.esm|3EB42",
+        "Skyrim.esm|73F26",
+        "Skyrim.esm|10AA4A"
+      ],
+      "name": "{}Lethal Poison"
+    }
+  ],
+  "effectPotencies": {
+    "AlchDamageHealth": {
+      "min": 5,
+      "max": 200
+    },
+    "AlchDamageHealthDuration": {
+      "min": 5,
+      "max": 100
+    },
+    "AlchDamageHealthRavage": {
+      "min": 5,
+      "max": 200
+    },
+    "AlchDamageSpeed": {
+      "min": 5,
+      "max": 100
+    },
+    "AlchParalysis": {
+      "min": 5,
+      "max": 100
+    },
+    "AlchDamageStaminaDuration": {
+      "min": 5,
+      "max": 100
+    },
+    "AlchDamageMagicka": {
+      "min": 5,
+      "max": 200
+    },
+    "AlchDamageMagickaRate": {
+      "min": 5,
+      "max": 100
+    },
+    "AlchWeaknessPoison": {
+      "min": 10,
+      "max": 200
+    }
+  }
+}
