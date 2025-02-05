@@ -1,14 +1,14 @@
 {
   "potions": [
     {
-      "effectFormIDs": [
+      "effects": [
         "Skyrim.esm|73F30",
         "Skyrim.esm|10AA4A"
       ],
       "name": "{}Poison of Inescapable Collapse"
     },
     {
-      "effectFormIDs": [
+      "effects": [
         "Skyrim.esm|73F30",
         "Skyrim.esm|10AA4A",
         "Skyrim.esm|3EB42"
@@ -16,21 +16,21 @@
       "name": "{}Poison of Fatal Collapse"
     },
     {
-      "effectFormIDs": [
+      "effects": [
         "Skyrim.esm|3EB42",
         "Skyrim.esm|73F25"
       ],
       "name": "Everyday {}Lacerating Poison"
     },
     {
-      "effectFormIDs": [
+      "effects": [
         "Skyrim.esm|3A2B6",
         "Skyrim.esm|73F2B"
       ],
       "name": "{}Mage's Bane Poison"
     },
     {
-      "effectFormIDs": [
+      "effects": [
         "Skyrim.esm|10DE5E",
         "Skyrim.esm|3EB42",
         "Skyrim.esm|73F2B"
@@ -38,7 +38,7 @@
       "name": "Dralval's {}Sapping Poison"
     },
     {
-      "effectFormIDs": [
+      "effects": [
         "Skyrim.esm|3EB42",
         "Skyrim.esm|90042",
         "Skyrim.esm|73F25"
@@ -46,7 +46,7 @@
       "name": "Cholzei's {}Chain Poison"
     },
     {
-      "effectFormIDs": [
+      "effects": [
         "Skyrim.esm|3EB42",
         "Skyrim.esm|73F26",
         "Skyrim.esm|10AA4A"

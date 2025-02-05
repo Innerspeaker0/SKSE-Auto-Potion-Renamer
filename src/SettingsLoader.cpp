@@ -73,7 +73,7 @@ namespace Settings {
 
     void SettingsLoader::ReadPotionsIn(const Json::Value& potionsRoot) {
         for (const auto& potion : potionsRoot) {
-            const auto& effectFormIDs = potion["effectFormIDs"];
+            const auto& effectFormIDs = potion["effects"];
 
             if (effectFormIDs.isArray() && effectFormIDs.size() <= MAX_EFFECTS) {
                 const int effectCount = effectFormIDs.size();
