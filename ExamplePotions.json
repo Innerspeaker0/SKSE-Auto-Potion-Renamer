@@ -68,7 +68,7 @@
       "max": 200
     },
     "AlchDamageSpeed": {
-      "min": 5,
+      "min": 10,
       "max": 100
     },
     "AlchParalysis": {
@@ -80,11 +80,11 @@
       "max": 100
     },
     "AlchDamageMagicka": {
-      "min": 5,
+      "min": 30,
       "max": 200
     },
     "AlchDamageMagickaRate": {
-      "min": 5,
+      "min": 10,
       "max": 100
     },
     "AlchWeaknessPoison": {
