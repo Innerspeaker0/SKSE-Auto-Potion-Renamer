@@ -22,7 +22,7 @@
         "Skyrim.esm|3EB42",
         "Skyrim.esm|73F25"
       ],
-      "name": "Everyday {}Lacerating Poison",
+      "name": "Everyday{}Lacerating Poison",
       "descriptor": "poison"
     },
     {
@@ -39,7 +39,7 @@
         "Skyrim.esm|3EB42",
         "Skyrim.esm|73F2B"
       ],
-      "name": "Dralval's {}Sapping Poison",
+      "name": "Dralval's{}Sapping Poison",
       "descriptor": "poison"
     },
     {
@@ -48,7 +48,7 @@
         "Skyrim.esm|90042",
         "Skyrim.esm|73F25"
       ],
-      "name": "Cholzei's {}Chain Poison",
+      "name": "Cholzei's{}Chain Poison",
       "descriptor": "poison"
     },
     {

@@ -13,12 +13,10 @@ namespace Hooks {
                                                         "VIII", "IX",  "X",    "XI",    "XII", "XIII", "XIV",
                                                         "XV",   "XVI", "XVII", "XVIII", "XIX", "XX"};
 
-        // Include a space after each name to allow for the empty name.
-        static constexpr const char* potencyNames[] = {"Weak ", "", "Potent ", "Virulent ", "Deadly "};
-
         static void RenameAlchemyItem(RE::TESDataHandler* a_dataHandler, RE::AlchemyItem* a_alchemyItem);
 
-        static std::string GetFormattedName(RE::AlchemyItem* a_alchemyItem, std::string_view inputName);
+        static std::string GetFormattedName(RE::AlchemyItem* a_alchemyItem, std::string_view inputName,
+                                            Settings::SettingsLoader::DescriptorFormat format, int descriptorCategory);
 
         static bool PotionsMatch(const Settings::SettingsLoader::CustomPotion& customPotion, RE::AlchemyItem* skyrimPotion);
 

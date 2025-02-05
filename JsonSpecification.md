@@ -1,0 +1,4 @@
+- The format specifier '{}' should be placed without spaces, e.g. "Dralval's{}Sapping Poison". 
+- An empty descriptor should be defined as "". Any required spaces are inserted by the code.
+- Descriptors can be defined in UserSettings.json or potion files.
+- Descriptors in UserSettings.json take priority over those defined elsewhere
