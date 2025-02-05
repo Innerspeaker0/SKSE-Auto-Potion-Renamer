@@ -13,7 +13,7 @@ namespace Hooks {
             logger::trace("Checking through all {} potions", potions.size());
             for (auto& potion : potions) {
                 if (PotionsMatch(potion, a_alchemyItem)) {
-                    a_alchemyItem->fullName = GetFormattedName(a_alchemyItem, potion.name);
+                    a_alchemyItem->fullName = GetFormattedName(a_alchemyItem, potion.name, potion.format, potion.descriptorIndex);
                     break;
                 }
             }
@@ -22,7 +22,8 @@ namespace Hooks {
         return;
     }
 
-    std::string AlchemyRenamer::GetFormattedName(RE::AlchemyItem* a_alchemyItem, std::string_view inputName) {
+    std::string AlchemyRenamer::GetFormattedName(RE::AlchemyItem* a_alchemyItem, std::string_view inputName,
+                                                 Settings::SettingsLoader::DescriptorFormat format, int descriptorCategory) {
         auto costliestEffect = a_alchemyItem->GetCostliestEffectItem();
 
         auto settings = Settings::SettingsLoader::GetSingleton();
@@ -34,9 +35,23 @@ namespace Hooks {
             const char* numeral = romanNumerals[(int)(potency * 19)];
             return std::vformat(inputName, std::make_format_args("")) + " "s + (std::string)numeral;
         } else {
-            const char* descriptor = potencyNames[(int)(potency * 4)];
+            using DFormat = Settings::SettingsLoader::DescriptorFormat;
 
-            return std::vformat(inputName, std::make_format_args(descriptor));
+            if (descriptorCategory == -1 || settings->descriptors[descriptorCategory].size() == 0) {
+                return format == DFormat::Both ? std::vformat(inputName, std::make_format_args(" "))
+                                               : std::vformat(inputName, std::make_format_args(""));
+            } else {
+                const RE::BSTArray<std::string>& potencyNames = settings->descriptors[descriptorCategory];
+                const int index = (int)(potency * (potencyNames.size() - 1));
+
+                const std::string& descriptor =
+                    (potencyNames[index] == "") ? (format == DFormat::Both ? " " : "") : 
+                                               ((format == DFormat::Before) ? " " + potencyNames[index]
+                                             : ((format == DFormat::After)  ? potencyNames[index] + " "
+                                                                            : " " + potencyNames[index] + " "));
+
+                return std::vformat(inputName, std::make_format_args(descriptor));
+            }
         }
     }
 

@@ -7,13 +7,13 @@ namespace Settings {
         static const char MAX_POTENCIES = 31;
         static const int MAX_EFFECTS = 4;
 
-        bool ReadPotionFile(const std::filesystem::path& jsonPath);
-
-        bool ReadSettingsFile(const std::filesystem::path& jsonPath);
-
-        void ReadPotionsIn(const Json::Value& potionsRoot);
+        void ReadPotionsIn(const Json::Value& potionsRoot, std::map<std::string, int>& descriptorNameMap,
+                           int& descriptorIndex);
 
         void ReadEffectsIn(const Json::Value& effectsRoot);
+
+        void ReadDescriptorsIn(const Json::Value& descriptorsRoot, std::map<std::string, int>& descriptorNameMap,
+                               int& descriptorIndex);
 
         Json::Value GetJson(const std::filesystem::path& jsonPath);
 
@@ -21,20 +21,23 @@ namespace Settings {
         RE::TESForm* GetFormFromIdentifier(const std::string& a_identifier);
 
     public: 
+        enum DescriptorFormat {
+            Before,
+            After,
+            Both
+        };
+
         struct CustomPotion {
             int effectIDs[MAX_EFFECTS] = {};
             std::string name;
+            DescriptorFormat format = Both;
             int effectCount = 0;
+            int descriptorIndex = -1;
 
             CustomPotion() = default;
 
-            CustomPotion(std::initializer_list<int> effectIDs, std::string_view p_name) : name(p_name) {
-                effectCount = effectIDs.size();
-                std::copy(effectIDs.begin(), effectIDs.end(), this->effectIDs);
-            };
-
-            CustomPotion(int effectIDs[MAX_EFFECTS], std::string_view p_name, int p_effectCount)
-                : name(p_name), effectCount(p_effectCount) {
+            CustomPotion(int effectIDs[MAX_EFFECTS], std::string_view p_name, DescriptorFormat p_format, int p_effectCount, int p_descriptorIndex = -1)
+                : name(p_name), format(p_format), effectCount(p_effectCount), descriptorIndex(p_descriptorIndex) {
                 for (int i = 0; i < effectCount; i++) {
                     this->effectIDs[i] = effectIDs[i];
                 }
@@ -53,6 +56,18 @@ namespace Settings {
 
         PotencyMap potencies = {};
 
+        using DescriptorMap = RE::BSTArray<RE::BSTArray<std::string>>;
+        
+        DescriptorMap descriptors = {};
+
         bool useRomanNumerals = false;
+
+    private: 
+        
+        void ReadPotionFile(const std::filesystem::path& jsonPath, std::map<std::string, int>& descriptorNameMap,
+                            int& descriptorIndex);
+
+        void ReadSettingsFile(const std::filesystem::path& jsonPath, std::map<std::string, int>& descriptorNameMap,
+                              int& descriptorIndex);
 	};
 }
