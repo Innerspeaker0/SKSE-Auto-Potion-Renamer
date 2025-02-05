@@ -16,9 +16,6 @@ namespace Settings {
         void ReadDescriptorsIn(const Json::Value& descriptorsRoot, std::map<std::string, int>& descriptorNameMap,
                                int& descriptorIndex);
 
-        void ReadDescriptorsIn(const Json::Value& descriptorsRoot, std::map<std::string, int>& descriptorNameMap,
-                               int& descriptorIndex);
-
         Json::Value GetJson(const std::filesystem::path& jsonPath);
 
         // Source: https://github.com/Exit-9B/AlchemyPlus/blob/main/src/Settings/UserSettings.cpp

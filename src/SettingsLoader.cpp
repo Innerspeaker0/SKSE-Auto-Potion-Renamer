@@ -72,11 +72,6 @@ namespace Settings {
                 }
             }
 
-            // Read descriptor definitions
-            if (root["descriptors"]) {
-                ReadDescriptorsIn(root["descriptors"], descriptorNameMap, descriptorIndex);
-            }
-
         } catch (std::exception& e) {
             logger::error("Encountered an error while parsing file {}: {}", jsonPath.string(), e.what());
         }
