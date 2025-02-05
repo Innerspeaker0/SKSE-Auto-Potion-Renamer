@@ -3,14 +3,15 @@
 namespace Settings {
 	class SettingsLoader {
     private:
-        static const char MAX_POTIONS = 15;
+        static const char MAX_POTIONS = 31;
         static const char MAX_POTENCIES = 31;
+        static const char MAX_DESCRIPTORS = 15;
         static const int MAX_EFFECTS = 4;
 
         void ReadPotionsIn(const Json::Value& potionsRoot, std::map<std::string, int>& descriptorNameMap,
                            int& descriptorIndex);
 
-        void ReadEffectsIn(const Json::Value& effectsRoot);
+        void ReadPotenciesIn(const Json::Value& effectsRoot);
 
         void ReadDescriptorsIn(const Json::Value& descriptorsRoot, std::map<std::string, int>& descriptorNameMap,
                                int& descriptorIndex);

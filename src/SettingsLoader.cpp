@@ -57,13 +57,19 @@ namespace Settings {
             // Read effect potencies
             if (!root["effectPotencies"]) {
                 logger::info("\"effectPotencies\" not found, will use default values");
+            } else if (root["effectPotencies"].size() > MAX_POTENCIES) {
+                logger::error("Failed to read \"effectPotencies\" option - exceeded maximum");
             } else {
-                ReadEffectsIn(root["effectPotencies"]);
+                ReadPotenciesIn(root["effectPotencies"]);
             }
 
             // Read descriptor definitions
             if (root["descriptors"]) {
-                ReadDescriptorsIn(root["descriptors"], descriptorNameMap, descriptorIndex);
+                if (root["descriptors"].size() > MAX_DESCRIPTORS) {
+                    logger::error("Failed to read \"descriptors\" option - exceeded maximum");
+                } else {
+                    ReadDescriptorsIn(root["descriptors"], descriptorNameMap, descriptorIndex);
+                }
             }
 
         } catch (std::exception& e) {
@@ -183,7 +189,7 @@ namespace Settings {
         return dataHandler->LookupForm(rawFormID, plugin);
     }
 
-    void SettingsLoader::ReadEffectsIn(const Json::Value& effectsRoot) {
+    void SettingsLoader::ReadPotenciesIn(const Json::Value& effectsRoot) {
         // Duplicate entries are overwritten
         for (const auto& potencyName : effectsRoot.getMemberNames()) {
             const auto& potency = effectsRoot[potencyName];
