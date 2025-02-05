@@ -1,3 +1,9 @@
 {
-  "useRomanNumerals": true
-}
+  "useRomanNumerals": true,
+  "descriptors": {
+      "potionMag": [ "Minor", "", "Plentiful", "Copious", "Extreme" ],
+      "potionDur": [ "Brief", "", "Extended", "Enduring", "Prolonged" ],
+      "potionName": [ "Potion", "Draught", "Solution", "Philter", "Elixir" ],
+      "poison": [ "Weak", "", "Potent", "Virulent", "Deadly" ]
+    }
+  }

@@ -5,7 +5,8 @@
         "Skyrim.esm|73F30",
         "Skyrim.esm|10AA4A"
       ],
-      "name": "{}Poison of Inescapable Collapse"
+      "name": "{}Poison of Inescapable Collapse",
+      "descriptor": "poison"
     },
     {
       "effects": [
@@ -13,21 +14,24 @@
         "Skyrim.esm|10AA4A",
         "Skyrim.esm|3EB42"
       ],
-      "name": "{}Poison of Fatal Collapse"
+      "name": "{}Poison of Fatal Collapse",
+      "descriptor": "poison"
     },
     {
       "effects": [
         "Skyrim.esm|3EB42",
         "Skyrim.esm|73F25"
       ],
-      "name": "Everyday {}Lacerating Poison"
+      "name": "Everyday {}Lacerating Poison",
+      "descriptor": "poison"
     },
     {
       "effects": [
         "Skyrim.esm|3A2B6",
         "Skyrim.esm|73F2B"
       ],
-      "name": "{}Mage's Bane Poison"
+      "name": "{}Mage's Bane Poison",
+      "descriptor": "poison"
     },
     {
       "effects": [
@@ -35,7 +39,8 @@
         "Skyrim.esm|3EB42",
         "Skyrim.esm|73F2B"
       ],
-      "name": "Dralval's {}Sapping Poison"
+      "name": "Dralval's {}Sapping Poison",
+      "descriptor": "poison"
     },
     {
       "effects": [
@@ -43,7 +48,8 @@
         "Skyrim.esm|90042",
         "Skyrim.esm|73F25"
       ],
-      "name": "Cholzei's {}Chain Poison"
+      "name": "Cholzei's {}Chain Poison",
+      "descriptor": "poison"
     },
     {
       "effects": [
@@ -51,7 +57,8 @@
         "Skyrim.esm|73F26",
         "Skyrim.esm|10AA4A"
       ],
-      "name": "{}Lethal Poison"
+      "name": "{}Lethal Poison",
+      "descriptor": "poison"
     }
   ],
   "effectPotencies": {
