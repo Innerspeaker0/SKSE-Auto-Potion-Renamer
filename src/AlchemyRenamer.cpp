@@ -30,12 +30,15 @@ namespace Hooks {
 
         float potency = EstimatePotency(*costliestEffect, settings->potencies);
 
+        using DFormat = Settings::SettingsLoader::DescriptorFormat;
+
         // Numerals and descriptors are placed in different positions
         if (settings->useRomanNumerals) {
             const char* numeral = romanNumerals[(int)(potency * 19)];
-            return std::vformat(inputName, std::make_format_args("")) + " "s + (std::string)numeral;
+            const char* space = format == DFormat::Both ? " " : "";
+            return std::vformat(inputName, std::make_format_args(space)) + " "s + (std::string)numeral;
         } else {
-            using DFormat = Settings::SettingsLoader::DescriptorFormat;
+            
 
             if (descriptorCategory == -1 || settings->descriptors[descriptorCategory].size() == 0) {
                 return format == DFormat::Both ? std::vformat(inputName, std::make_format_args(" "))
