@@ -1,7 +1,7 @@
 # JSON config specification
 The mod supports multiple JSON files along with an optional UserSettings.json. Each JSON file can define **potions**, **descriptors**, and **effect potencies**.
 There is a hard limit of 31 potions, 31 effect potencies, and 15 descriptor definitions in each file. 
-There is a potential performance impact the more files that are loaded, but this should not be noticable with under 50 potions.
+There is a potential performance impact the more files that are loaded, but this should not be noticable with under 255 potions.
 Do not attempt to use this plugin to rename every potion, use the wonderful [Alchemy Plus](https://www.nexusmods.com/skyrimspecialedition/mods/80882) instead!
 
 ## Names 

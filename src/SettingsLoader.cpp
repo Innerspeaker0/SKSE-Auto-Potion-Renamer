@@ -29,8 +29,8 @@ namespace Settings {
         for (const auto& pair : descriptorNameMap) {
             if (descriptors[pair.second].size() == 0) {
                 logger::warn(
-                    "Warning: Descriptors not found for category \"{}\", '{}' will be stripped from potion names",
-                    pair.first, "{}");
+                    "Warning: Descriptors not found for category \"{}\", '{{}}' will be stripped from potion names",
+                    pair.first);
             } else {
                 categoryCount++;
             }
@@ -73,7 +73,7 @@ namespace Settings {
             }
 
         } catch (std::exception& e) {
-            logger::error("Encountered an error while parsing file {}: {}", jsonPath.string(), e.what());
+            logger::error("Encountered an error while parsing file {}: {}", jsonPath.filename().string(), e.what());
         }
     }
 
@@ -96,7 +96,7 @@ namespace Settings {
                 logger::warn("Descriptor definitions not found in UserSettings.json");
             }
         } catch (std::exception& e) {
-            logger::error("Encountered an error while parsing file {}: {}", jsonPath.string(), e.what());
+            logger::error("Encountered an error while parsing file {}: {}", jsonPath.filename().string(), e.what());
         }
     }
 
@@ -135,12 +135,21 @@ namespace Settings {
                         descriptorNameMap[potion["descriptor"].asString()] = descriptorIndex++;
                     }
                 } else {
-                    logger::warn("Potion was missing \"descriptor\" field, '{}' will be removed.", "{}");
+                    logger::warn("Potion was missing \"descriptor\" field, '{{}}' will be removed.");
                 }
 
                 if (potion["name"].isString()) {
-                    // Precalculate descriptor formatting
                     std::string name = potion["name"].asString();
+                    
+                    int open = std::count(name.begin(), name.end(), '{');
+                    int close = std::count(name.begin(), name.end(), '}');
+                    if (open != close || open > 1 || name.at(name.find('{') + 1) != '}') {
+                        // Check for names that cannot be formatted correctly (and would cause a crash if used)
+                        logger::error("Could not read potion name - name must contain 1 or fewer '{{}}' and no unbalanced braces");
+                        continue;
+                    }
+
+                    // Precalculate descriptor formatting
                     DescriptorFormat format;
                     if (name.starts_with('{')) {
                         format = After;
