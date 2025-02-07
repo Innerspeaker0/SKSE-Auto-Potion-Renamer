@@ -17,6 +17,7 @@ This is usually at the start (e.g. "Potent" Poison of...) or before the adjectiv
 ## Effects
 - Each potion can be defined by between 2 and 4 (inclusive) effects.
 - An effect is specified by its File and FormID, e.g. `Skyrim.esm|10DE5E`. This means that effect FormIDs from mods can be used. Make sure to use **the file name, not the mod name**
+- Potions are only renamed if the number of effects is the same as the one given in the file and all effects match.
 
 ## Descriptors
 Descriptors tell the mod what to name potions as their effectiveness increase. These can be defined in either the user settings file or individual potion files, but definitions in user settings are given priority.
