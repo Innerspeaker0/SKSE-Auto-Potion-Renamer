@@ -6,7 +6,7 @@ Do not attempt to use this plugin to rename every potion, use the wonderful [Alc
 
 ## UserSettings.json
 Not essential but highly recommended.
-#### UseRomanNumerals
+#### useRomanNumerals
 When set to true, descriptors are removed and all potion names are appended with a numeral from I-XX depending on potency
 
 ## Names 
