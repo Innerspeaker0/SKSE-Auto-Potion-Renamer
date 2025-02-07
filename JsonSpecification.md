@@ -4,6 +4,11 @@ There is a hard limit of 31 potions, 31 effect potencies, and 15 descriptor defi
 There is a potential performance impact the more files that are loaded, but this should not be noticable with under 255 potions.
 Do not attempt to use this plugin to rename every potion, use the wonderful [Alchemy Plus](https://www.nexusmods.com/skyrimspecialedition/mods/80882) instead!
 
+## UserSettings.json
+Not essential but highly recommended.
+#### UseRomanNumerals
+When set to true, descriptors are removed and all potion names are appended with a numeral from I-XX depending on potency
+
 ## Names 
 - The format specifier, `{}`, should be placed without spaces, e.g. `"Dralval's{}Sapping Poison"`. 
 - Put the format specifier where it makes most sense for a describing word to go. 
