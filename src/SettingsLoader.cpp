@@ -103,17 +103,71 @@ namespace Settings {
     void SettingsLoader::ReadPotionsIn(const Json::Value& potionsRoot, std::map<std::string, int>& descriptorNameMap,
                                        int& descriptorIndex) {
         for (const auto& potion : potionsRoot) {
-            const auto& effectFormIDs = potion["effects"];
+            DescriptorFormat format;
+            std::string name = "ERRORNAME";
+            int parsedIDs[MAX_EFFECTS] = {};
+            int effectCount = 0;
 
-            if (effectFormIDs.isArray() && effectFormIDs.size() <= MAX_EFFECTS) {
-                const int effectCount = effectFormIDs.size();
-                int parsedIDs[MAX_EFFECTS] = {};
+            // Read name
+            if (potion["name"].isString()) {
+                name = potion["name"].asString();
+                int open = std::count(name.begin(), name.end(), '{');
+                int close = std::count(name.begin(), name.end(), '}');
+                if (open != close || open > 1 || (open > 0 && name.at(name.find('{') + 1) != '}')) {
+                    // Check for names that cannot be formatted correctly (and would cause a crash if used)
+                    logger::error(
+                        "Could not read potion name - name must contain 1 or fewer '{{}}' and no unbalanced braces");
+                    continue;
+                }
+
+                // Precalculate descriptor formatting
+                if (name.starts_with('{')) {
+                    format = After;
+                } else if (name.ends_with('}')) {
+                    format = Before;
+                } else {
+                    format = Both;
+                }
+            } else {
+                logger::error("Could not read potion name");
+                continue;
+            }
+
+            // Read effects
+            const auto& effectFormIDs = potion["effects"];
+            if (effectFormIDs.isArray()) {
+                effectCount = effectFormIDs.size();
+                if (effectCount > MAX_EFFECTS || effectCount < 2) {
+                    logger::error(
+                        "Error loading effects - each potion must have between 2 and {} effects, skipping \"{}\"...",
+                        MAX_EFFECTS, name);
+                    continue;
+                }
                 bool problemLoadingEffects = false;
                 for (int i = 0; i < effectCount; i++) {
-                    const auto form = GetFormFromIdentifier(effectFormIDs[i].asString());
-                    if (!form || !form->Is(RE::FormType::MagicEffect)) {
-                        logger::error("Failed to load formID \"{}\", skipping potion", effectFormIDs[i].asString());
+                    RE::TESForm* form = nullptr;
+                    const std::string id = effectFormIDs[i].asString();
+                    // Load FormIDs in the form "Plugin.esp|BEEF0" or editor IDs in the form "AlchResistFrost"
+                    switch (std::count(id.begin(), id.end(), '|')) {
+                        case 0:  // Probably an editor ID
+                            form = RE::TESForm::LookupByEditorID(id);
+                            break;
+                        case 1:  // Probably a form ID
+                            form = GetFormFromIdentifier(id);
+                            break;
+                        default:  // Probably an error (caught by following 'if')
+                            break;
+                    }
+                    if (!form) {
+                        logger::error("Failed to load ID \"{}\", skipping \"{}\"...", effectFormIDs[i].asString(), name);
                         problemLoadingEffects = true;
+                        break;
+                    } else if (!form->Is(RE::FormType::MagicEffect)) {
+                        logger::error(
+                            "Form {} was loaded as \"{}\", which is not an alchemy effect, skipping \"{}\"...",
+                            Utils::GetHexString(form->formID), Utils::GetFormEditorID(form), name);
+                        problemLoadingEffects = true;
+                        break;
                     } else {
                         parsedIDs[i] = form->formID;
                     }
@@ -121,61 +175,34 @@ namespace Settings {
 
                 if (problemLoadingEffects) {
                     continue;
-                }
-
-                int potionDescriptorIndex = -1;
-                if (potion["descriptor"]) {
-                    const std::string descriptorName = potion["descriptor"].asString();
-                    if (descriptorNameMap.contains(descriptorName)) { 
-                        // Look up the descriptor index
-                        potionDescriptorIndex = descriptorNameMap[descriptorName];
-                    } else { // We have found a potion defined before the descriptor it is referencing
-                        descriptors.push_back({});
-                        potionDescriptorIndex = descriptorIndex;
-                        descriptorNameMap[potion["descriptor"].asString()] = descriptorIndex++;
-                    }
-                } else {
-                    logger::warn("Potion was missing \"descriptor\" field, '{{}}' will be removed.");
-                }
-
-                if (potion["name"].isString()) {
-                    std::string name = potion["name"].asString();
-                    
-                    int open = std::count(name.begin(), name.end(), '{');
-                    int close = std::count(name.begin(), name.end(), '}');
-                    if (open != close || open > 1 || name.at(name.find('{') + 1) != '}') {
-                        // Check for names that cannot be formatted correctly (and would cause a crash if used)
-                        logger::error("Could not read potion name - name must contain 1 or fewer '{{}}' and no unbalanced braces");
-                        continue;
-                    }
-
-                    // Precalculate descriptor formatting
-                    DescriptorFormat format;
-                    if (name.starts_with('{')) {
-                        format = After;
-                    } else if (name.ends_with('}')) {
-                        format = Before;
-                    } else {
-                        format = Both;
-                    }
-
-                    CustomPotion customPotion = {parsedIDs, name, format, effectCount, potionDescriptorIndex};
-                    potions.push_back(customPotion);
-
-                    std::string infoFormIDString = "";
-                    for (auto id : customPotion.effectIDs)
-                        infoFormIDString += id == 0 ? "" : (Utils::GetHexString(id) + ", ");
-                    logger::info("\"{}\" has been read with effect formIDs: {}", customPotion.name,
-                                    infoFormIDString);
-
-                } else {
-                    logger::error("Could not read potion name");
-                    continue;
-                }
+                }            
             } else {
-                logger::error("Could not read potion effects");
+                logger::error("Could not read \"{}\" effects", name);
                 continue;
             }
+
+            // Read descriptors
+            int potionDescriptorIndex = -1;
+            if (potion["descriptor"]) {
+                const std::string descriptorName = potion["descriptor"].asString();
+                if (descriptorNameMap.contains(descriptorName)) {
+                    // Look up the descriptor index
+                    potionDescriptorIndex = descriptorNameMap[descriptorName];
+                } else {  // We have found a potion defined before the descriptor it is referencing
+                    descriptors.push_back({});
+                    potionDescriptorIndex = descriptorIndex;
+                    descriptorNameMap[potion["descriptor"].asString()] = descriptorIndex++;
+                }
+            } else {
+                logger::warn("\"{}\" was missing \"descriptor\" field, '{{}}' will be removed.", name);
+            }
+
+            CustomPotion customPotion = {parsedIDs, name, format, effectCount, potionDescriptorIndex};
+            potions.push_back(customPotion);
+
+            std::string infoFormIDString = "";
+            for (auto id : customPotion.effectIDs) infoFormIDString += id == 0 ? "" : (Utils::GetHexString(id) + ", ");
+            logger::info("\"{}\" has been read with effect formIDs: {}", customPotion.name, infoFormIDString);
         }
 
         logger::info("Successfully loaded {} potions", potions.size());

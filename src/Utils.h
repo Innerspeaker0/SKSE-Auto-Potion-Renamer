@@ -2,7 +2,7 @@
 
 namespace Utils {
 	
-    inline std::string GetHexString(int& number) {
+    inline std::string GetHexString(int number) {
         std::stringstream stream;
         stream << std::setw(8) << std::setfill('0') << std::uppercase << std::hex << number;
 
