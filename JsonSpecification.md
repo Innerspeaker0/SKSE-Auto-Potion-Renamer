@@ -14,9 +14,10 @@ When set to true, descriptors are removed and all potion names are appended with
 - Put the format specifier where it makes most sense for a describing word to go. 
 This is usually at the start (e.g. "Potent" Poison of...) or before the adjective (e.g. Potion of "Brief" ...). Sometimes it can replace the word "Potion" entirely with words like "Draught" or "Elixir".
 
-## Effects
+## Potion Effects
 - Each potion can be defined by between 2 and 4 (inclusive) effects.
 - An effect is specified by its File and FormID, e.g. `Skyrim.esm|10DE5E`. This means that effect FormIDs from mods can be used. Make sure to use **the file name, not the mod name**
+- Effects can also be specified by editor IDs, if desired. Do not include the plugin file name when using editor IDs.
 - Potions are only renamed if the number of effects is the same as the one given in the file and all effects match.
 
 ## Descriptors
